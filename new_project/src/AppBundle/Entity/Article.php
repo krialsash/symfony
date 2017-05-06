@@ -100,13 +100,13 @@ class Article
     }
 
     /**
-     * Get Discription
+     * Get description
      *
      * @return string
      */
-    public function getDiscription(): string
+    public function getDescription(): string
     {
-        return $this->description;
+        return (string) $this->description;
     }
 
     /**

@@ -9,7 +9,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Article;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DataTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +20,7 @@ class ArticleType extends  AbstractType
     {
         $builder->add('name')
             ->add('description')
-            ->add('create_at'? \DateTimeType::class)
+            ->add('created_at', DateTimeType::class)
             ->add('submit', SubmitType::class);
     }
     public function configureOptions(OptionsResolver $resolver)

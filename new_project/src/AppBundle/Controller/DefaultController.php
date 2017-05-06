@@ -20,18 +20,17 @@ class DefaultController extends Controller
     /**
      * @Route("/article", name="article_index")
      */
-
     public function indexAction()
     {
-        var_dump(213);
+
         $article = $this->getDoctrine()->getRepository(Article::class);
         $article = $article->findAll();
 
-        return $this->render('entity/index.html.twig', array('articles' => $articles));
+        return $this->render('default/index.html.twig', array('article' => $article));
     }
 
     /**
-     * @Route("article/new", name="article_new")
+     * @Route("/article/new", name="article_new")
      *
      * @param Request $request
      *
@@ -50,8 +49,10 @@ class DefaultController extends Controller
 
             return $this->redirectToRoute('article_index');
         }
-        return $this->render('entity/new.html.twig', array('article' => $article,
-            'form' => $form->createView()));
+        return $this->render(
+            'default/new.html.twig',
+            array('article' => $article,'form' => $form->createView())
+        );
     }
 
     /**
@@ -64,7 +65,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $article = $em->getRepository(Article::class)->find($id);
 
-        return $this->render('entity/show.html.twig', array('article' => $article));
+        return $this->render('default/show.html.twig', array('article' => $article));
     }
 
     /**
@@ -72,7 +73,7 @@ class DefaultController extends Controller
      *
      * @param $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function updateAction(Request $request)
     {
@@ -88,14 +89,16 @@ class DefaultController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()){
-            $em->persist(@article);
+            $em->persist($article);
             $em->flush();
 
             return $this->redirectToRoute('entity_edit', array('id' => $id));
         }
 
-        return $this->render('entity/edit.html.twig', array('article' => $article,
-            'edit_form' => $editForm->createView()));
+        return $this->render(
+            'default/edit.html.twig', array('article' => $article,
+            'edit_form' => $editForm->createView())
+        );
     }
 
     /**
