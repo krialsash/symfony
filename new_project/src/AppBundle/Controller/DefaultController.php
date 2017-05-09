@@ -85,19 +85,19 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('No WTF id '.$id);
         }
 
-        $edit_Form = $this->createForm(ArticleType::class, $article);
-        $edit_Form->handleRequest($request);
+        $edit_form = $this->createForm(ArticleType::class, $article);
+        $edit_form->handleRequest($request);
 
-        if ($edit_Form->isValid()){
+        if ($edit_form->isValid()){
             $em->persist($article);
             $em->flush();
 
-            return $this->redirectToRoute('entity_edit', array('id' => $id));
+            return $this->redirectToRoute('article_index', array('id' => $id));
         }
 
         return $this->render(
             'default/edit.html.twig', array('article' => $article,
-            'edit_form' => $edit_Form->createView())
+            'edit_form' => $edit_form->createView())
         );
     }
 
