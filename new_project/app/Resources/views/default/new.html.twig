@@ -1,1 +1,18 @@
-{{ form(form) }}
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h2>Entity creation</h2>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }} //нужно ли 3 - или достаточно 1
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('article_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}
+
+
