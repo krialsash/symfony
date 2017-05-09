@@ -97,7 +97,7 @@ class DefaultController extends Controller
 
         return $this->render(
             'default/edit.html.twig', array('article' => $article,
-            'edit_form' => $editForm->createView())
+            'editform' => $editForm->createView())
         );
     }
 
