@@ -14,7 +14,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for entity in article %}
+        {% for entity in articles %}
             <tr>
                 <td><a href="{{ path('article_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.name }}</td>

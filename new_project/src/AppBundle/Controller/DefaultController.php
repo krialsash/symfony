@@ -23,10 +23,10 @@ class DefaultController extends Controller
     public function indexAction()
     {
 
-        $article = $this->getDoctrine()->getRepository(Article::class);
-        $article = $article->findAll();
+        $articleRepository = $this->getDoctrine()->getRepository(Article::class);
+        $articles = $articleRepository->findAll();
 
-        return $this->render('default/index.html.twig', array('article' => $article));
+        return $this->render('default/index.html.twig', array('articles' => $articles));
     }
 
     /**
@@ -42,16 +42,17 @@ class DefaultController extends Controller
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
-        if($form->isValid()) {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
 
             return $this->redirectToRoute('article_index');
         }
+
         return $this->render(
             'default/new.html.twig',
-            array('article' => $article,'form' => $form->createView())
+            array('form' => $form->createView())
         );
     }
 
@@ -96,8 +97,7 @@ class DefaultController extends Controller
         }
 
         return $this->render(
-            'default/edit.html.twig', array('article' => $article,
-            'edit_form' => $edit_form->createView())
+            'default/edit.html.twig', array('edit_form' => $edit_form->createView())
         );
     }
 
