@@ -54,6 +54,16 @@ class NamespaceSymfony
     private $class;
 
     /**
+     * NamespaceSymfony constructor for intarface & class
+     */
+    public function __construct()
+    {
+        $this->interface = new ArrayCollection();
+
+        $this->class = new ArrayCollection();
+    }
+
+    /**
      * @return int
      */
     public function getId()
