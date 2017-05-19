@@ -4,17 +4,12 @@
 
 namespace AppBundle\Entity;
 
-// use Doctrine\Common\Collections\ArrayCollection;
-// use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * NamespaceSymfony
  *
  * @ORM\Entity()
- *
- *
- *
  */
 class NamespaceSymfony
 {
@@ -22,9 +17,7 @@ class NamespaceSymfony
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
-     *
      * @ORM\Id
-     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -59,7 +52,6 @@ class NamespaceSymfony
     public function __construct()
     {
         $this->interface = new ArrayCollection();
-
         $this->class = new ArrayCollection();
     }
 

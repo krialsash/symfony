@@ -50,7 +50,10 @@ class DefaultController extends Controller
             return $this->redirectToRoute('article_index');
         }
 
-        return $this->render('default/new.html.twig', array('form' => $form->createView())
+        return $this->render('default/new.html.twig',
+            [
+                'form' => $form->createView()
+            ]
         );
     }
 
@@ -94,7 +97,10 @@ class DefaultController extends Controller
             return $this->redirectToRoute('article_index', array('id' => $id));
         }
 
-        return $this->render('default/edit.html.twig', array('edit_form' => $edit_form->createView())
+        return $this->render('default/edit.html.twig',
+            [
+                'edit_form' => $edit_form->createView()
+            ]
         );
     }
 

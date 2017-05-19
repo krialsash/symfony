@@ -49,12 +49,17 @@ class Article
     private $created_at;
 
     /**
+     * Article constructor
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
      * Get id
      *
      * @return int
-     */
-    /**
-     * @return mixed
      */
     public function getId()
     {
