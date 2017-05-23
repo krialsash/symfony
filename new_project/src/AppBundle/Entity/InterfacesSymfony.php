@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity()
  */
-class InterfaceSymfony
+class InterfacesSymfony
 {
     /**
      * @var int
@@ -37,9 +37,9 @@ class InterfaceSymfony
     private $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="NamespaceSymfony", inversedBy="interface")
+     * @ORM\ManyToOne(targetEntity="NamespacesSymfony", inversedBy="interfaces")
      */
-    private $namespace;
+    private $namespaces;
 
     /**
      * @return int
@@ -63,6 +63,8 @@ class InterfaceSymfony
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -79,22 +81,26 @@ class InterfaceSymfony
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getNamespace()
+    public function getNamespaces()
     {
-        return $this->namespace;
+        return $this->namespaces;
     }
 
     /**
      * @param mixed $namespace
      */
-    public function setNamespace($namespace)
+    public function setNamespaces($namespaces)
     {
-        $this->namespace = $namespace;
+        $this->namespaces = $namespaces;
+
+        return $this;
     }
 
 }

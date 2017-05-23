@@ -133,9 +133,6 @@ class Article
      *
      * @return \DateTime
      */
-    /**
-     * @return string
-     */
     public function getCreatedAt()
     {
         return $this->created_at;

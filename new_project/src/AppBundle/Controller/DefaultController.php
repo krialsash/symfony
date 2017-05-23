@@ -26,7 +26,12 @@ class DefaultController extends Controller
         $articleRepository = $this->getDoctrine()->getRepository(Article::class);
         $articles = $articleRepository->findAll();
 
-        return $this->render('default/index.html.twig', array('articles' => $articles));
+        return $this->render('default/index.html.twig',
+            [
+                'articles' => $articles
+            ]
+        );
+
     }
 
     /**
@@ -67,7 +72,11 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $article = $em->getRepository(Article::class)->find($id);
 
-        return $this->render('default/show.html.twig', array('article' => $article));
+        return $this->render('default/show.html.twig',
+            [
+                'article' => $article
+            ]
+        );
     }
 
     /**
@@ -94,7 +103,11 @@ class DefaultController extends Controller
             $em->persist($article);
             $em->flush();
 
-            return $this->redirectToRoute('article_index', array('id' => $id));
+            return $this->redirectToRoute('article_index',
+                [
+                    'id' => $id
+                ]
+            );
         }
 
         return $this->render('default/edit.html.twig',

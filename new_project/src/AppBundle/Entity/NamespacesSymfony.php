@@ -7,11 +7,11 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * NamespaceSymfony
+ * NamespacesSymfony
  *
  * @ORM\Entity()
  */
-class NamespaceSymfony
+class NamespacesSymfony
 {
     /**
      * @var int
@@ -37,22 +37,22 @@ class NamespaceSymfony
     private $url;
 
     /**
-     * @ORM\OneToMany(targetEntity="InterfaceSymfony", mappedBy="namespace")
+     * @ORM\OneToMany(targetEntity="InterfacesSymfony", mappedBy="namespaces")
      */
-    private $interface;
+    private $interfaces;
 
     /**
-     * @ORM\OneToMany(targetEntity="ClassSymfony", mappedBy="namespace")
+     * @ORM\OneToMany(targetEntity="ClassesSymfony", mappedBy="namespaces")
      */
-    private $class;
+    private $classes;
 
     /**
-     * NamespaceSymfony constructor for intarface & class
+     * NamespacesSymfony constructor for intarfaces & classes
      */
     public function __construct()
     {
-        $this->interface = new ArrayCollection();
-        $this->class = new ArrayCollection();
+        $this->interfaces = new ArrayCollection();
+        $this->classes = new ArrayCollection();
     }
 
     /**
@@ -77,6 +77,8 @@ class NamespaceSymfony
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -93,38 +95,44 @@ class NamespaceSymfony
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getInterface()
+    public function getInterfaces()
     {
-        return $this->interface;
+        return $this->interfaces;
     }
 
     /**
-     * @param mixed $interface
+     * @param mixed $interfaces
      */
-    public function setInterface($interface)
+    public function setInterface($interfaces)
     {
-        $this->interface = $interface;
+        $this->interfaces = $interfaces;
+
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getClass()
+    public function getClasses()
     {
-        return $this->class;
+        return $this->classes;
     }
 
     /**
-     * @param mixed $class
+     * @param mixed $classes
      */
-    public function setClass($class)
+    public function setClasses($classes)
     {
-        $this->classes = $class;
+        $this->classeses = $classes;
+
+        return $this;
     }
 }
 
