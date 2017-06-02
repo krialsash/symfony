@@ -31,7 +31,6 @@ class DefaultController extends Controller
                 'articles' => $articles
             ]
         );
-
     }
 
     /**

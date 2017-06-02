@@ -7,11 +7,11 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ClassSymfony
+ * InterfaceSymfony
  *
  * @ORM\Entity()
  */
-class ClassesSymfony
+class InterfaceSymfony
 {
     /**
      * @var int
@@ -37,9 +37,9 @@ class ClassesSymfony
     private $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="NamespacesSymfony", inversedBy="classes")
+     * @ORM\ManyToOne(targetEntity="NamespaceSymfony", inversedBy="interfaces")
      */
-    private $namespaces;
+    private $namespace;
 
     /**
      * @return int
@@ -88,17 +88,17 @@ class ClassesSymfony
     /**
      * @return mixed
      */
-    public function getNamespaces()
+    public function getNamespace()
     {
-        return $this->namespaces;
+        return $this->namespace;
     }
 
     /**
-     * @param mixed $namespaces
+     * @param mixed $namespace
      */
-    public function setNamespaces($namespaces)
+    public function setNamespace($namespace)
     {
-        $this->namespace = $namespaces;
+        $this->namespace = $namespace;
 
         return $this;
     }

@@ -2,7 +2,10 @@
 
 namespace AppBundle\Command;
 
-use \Symfony\Component\Console\Command\Command;
+use AppBundle\Entity\ClassSymfony;
+use AppBundle\Entity\InterfaceSymfony;
+use AppBundle\Entity\NamespaceSymfony;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
@@ -13,12 +16,14 @@ class ParseCommand extends Command
     {
         $this
             ->setName('app:parse')
-
             ->setDescription('Creates a new parse API.symfony.com.')
-
             ->setHelp('This command allows you parsing sites...');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $html = file_get_contents('http://api.symfony.com/3.2/');
@@ -26,44 +31,66 @@ class ParseCommand extends Command
 
         $crawler = new Crawler($html);
 
-        $rowNamespaces = $crawler->filter('div.namespace-container > ul > li > a');
+        // Namespace
+        $rowNamespace = $crawler->filter('div.namespace-container > ul > li > a');
         // var_dump($rows->count());
 
-        foreach ($rowNamespaces as $item)
-        {
-            $url = 'http://api.symfony.com/3.2/'.$item->getAttribute('href');
+        foreach ($rowNamespace as $item) {
+            $url = 'http://api.symfony.com/3.2/' . $item->getAttribute('href');
 
-            var_dump($item->nodeName);
-            var_dump($item->textContent);
-            var_dump($url);
+            // var_dump($item->nodeName);
+            // var_dump($item->textContent);
+            // var_dump($url);
 
-            $urlNamespace = file_get_contents($url);
+            $namespaceUrl = $item->getAttribute("href");
+            $namespaceName = $item->textContent;
 
-            $crawlerClass= new Crawler($urlNamespace);
+            $namespace = new NamespaceSymfony();
+            $namespace->setUrl($namespaceUrl);
+            $namespace->setName($namespaceName);
 
-            $rowClasses = $crawlerClass->filter(
-                'div#page-content > div.container-fluid.underlined > div.row > div.col-md-6 > a');
+            $em->persist($namespace);
 
-            foreach($rowClasses as $itemClass) {
+            // Class
+            $htmlNamespaceForClass = file_get_contents('http://api.symfony.com/3.2/' . $namespaceUrl);
+            $CrawlerNamespace = new Crawler($htmlNamespaceForClass);
 
-                var_dump($itemClass->nodeName);
-                var_dump($itemClass->textContent);
-                var_dump($itemClass->getAttribute('href'));
+            $forClass = $CrawlerNamespace->filter
+            ('div#page-content > div.container-fluid.underlined > div.row > div.col-md-6 > a');
+
+            foreach ($forClass as $item) {
+
+                $classUrl = $item->getAttribute("href");
+                $className = $item->textContent;
+
+                $class = new ClassSymfony();
+                $class->setUrl($classUrl);
+                $class->setName($className);
+                $class->setNamespace($namespace);
+
+                $em->persist($class);
             }
 
-            $crawlerInterface = new Crawler($urlNamespace);
+            //Interface
+            $htmlNamespaceForInt = file_get_contents('http://api.symfony.com/3.2/' . $namespaceUrl);
+            $CrawlerInterface = new Crawler($htmlNamespaceForInt);
 
-            $rowInterfaces = $crawlerInterface->filter(
-                'div#page-content > div.container-fluid.underlined > div.row > div.col-md-6 > em > a');
+            $forInterface = $CrawlerInterface->filter
+            ('div.container-fluid.underlined > div.row > div.col-md-6 > em > a');
 
-            foreach($rowInterfaces as $itemInterface) {
+            foreach ($forInterface as $item) {
 
-                var_dump($itemInterface->nodeName);
-                var_dump($itemInterface->textContent);
-                var_dump($itemInterface->getAttribute('href'));
+                $interfaceUrl = $item->getAttribute("href");
+                $interfaceName = $item->textContent;
+
+                $interface = new InterfaceSymfony();
+                $interface->setUrl($interfaceUrl);
+                $interface->setName($interfaceName);
+                $interface->setNamespace($namespace);
+
+                $em->persist($interface);
             }
-
-
         }
+    $em->flush();
     }
 }

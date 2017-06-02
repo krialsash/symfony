@@ -1,17 +1,17 @@
 <?php
 
-// declare(strict_types = 1);
+// declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * NamespacesSymfony
+ * ClassSymfony
  *
  * @ORM\Entity()
  */
-class NamespacesSymfony
+class ClassSymfony
 {
     /**
      * @var int
@@ -32,28 +32,14 @@ class NamespacesSymfony
     /**
      * @var string
      *
-     * @ORM\Column(type="string", type="text")
+     * @ORM\Column(name="url", type="text")
      */
     private $url;
 
     /**
-     * @ORM\OneToMany(targetEntity="InterfacesSymfony", mappedBy="namespaces")
+     * @ORM\ManyToOne(targetEntity="NamespaceSymfony", inversedBy="classes")
      */
-    private $interfaces;
-
-    /**
-     * @ORM\OneToMany(targetEntity="ClassesSymfony", mappedBy="namespaces")
-     */
-    private $classes;
-
-    /**
-     * NamespacesSymfony constructor for intarfaces & classes
-     */
-    public function __construct()
-    {
-        $this->interfaces = new ArrayCollection();
-        $this->classes = new ArrayCollection();
-    }
+    private $namespace;
 
     /**
      * @return int
@@ -102,37 +88,19 @@ class NamespacesSymfony
     /**
      * @return mixed
      */
-    public function getInterfaces()
+    public function getNamespace()
     {
-        return $this->interfaces;
+        return $this->namespace;
     }
 
     /**
-     * @param mixed $interfaces
+     * @param mixed $namespaces
      */
-    public function setInterface($interfaces)
+    public function setNamespace($namespace)
     {
-        $this->interfaces = $interfaces;
+        $this->namespace = $namespace;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getClasses()
-    {
-        return $this->classes;
-    }
-
-    /**
-     * @param mixed $classes
-     */
-    public function setClasses($classes)
-    {
-        $this->classeses = $classes;
-
-        return $this;
-    }
 }
-
