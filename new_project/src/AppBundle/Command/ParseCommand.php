@@ -6,7 +6,6 @@ use AppBundle\Entity\ClassSymfony;
 use AppBundle\Entity\InterfaceSymfony;
 use AppBundle\Entity\NamespaceSymfony;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-// use Symfony\Component\Console\Command\Command - for Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
@@ -32,16 +31,14 @@ class ParseCommand extends ContainerAwareCommand
         $crawler = new Crawler($html);
 
         // Namespace
-        $rowNamespace = $crawler->filter('div.namespace-container > ul > li > a');
+        $rowNamespaces = $crawler->filter('div.namespace-container > ul > li > a');
         // var_dump($rowNamespace->count());
 
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        foreach ($rowNamespace as $item) {
-            // $href = 'http://api.symfony.com/3.2/' .$item->getAttribute('href');
-            // var_dump($href);
+        foreach ($rowNamespaces as $itemNamespace) {
 
-            $namespaceUrl = 'http://api.symfony.com/3.2/' .$item->getAttribute('href');
+            $namespaceUrl = 'http://api.symfony.com/3.2/' .$itemNamespace->getAttribute('href');
             $namespaceName = $item->textContent;
 
             $namespace = new NamespaceSymfony();
@@ -55,13 +52,12 @@ class ParseCommand extends ContainerAwareCommand
 
             $CrawlerNamespace = new Crawler($htmlNamespaceForClass);
 
-            $forClass = $CrawlerNamespace->filter
+            $rowClasses = $CrawlerNamespace->filter
             ('div#page-content > div.container-fluid.underlined > div.row > div.col-md-6 > a');
-            // var_dump($forClass);
 
-            foreach ($forClass as $item) {
+            foreach ($rowClasses as $itemClass) {
 
-                $classUrl = 'http://api.symfony.com/3.2/'.str_replace('../', '', $item->getAttribute('href'));
+                $classUrl = 'http://api.symfony.com/3.2/'.str_replace('../', '', $itemClass->getAttribute('href'));
                 $className = $item->textContent;
 
                 $class = new ClassSymfony();
@@ -76,12 +72,12 @@ class ParseCommand extends ContainerAwareCommand
             $htmlNamespaceForInt = file_get_contents($namespaceUrl);
             $CrawlerInterface = new Crawler($htmlNamespaceForInt);
 
-            $forInterface = $CrawlerInterface->filter
+            $rowInterfaces = $CrawlerInterface->filter
             ('div.container-fluid.underlined > div.row > div.col-md-6 > em > a');
 
-            foreach ($forInterface as $item) {
+            foreach ($rowInterfaces as $itemInterface) {
 
-                $interfaceUrl = 'http://api.symfony.com/3.2/'.str_replace('../', '', $item->getAttribute('href'));
+                $interfaceUrl = 'http://api.symfony.com/3.2/'.str_replace('../', '', $itemInterface->getAttribute('href'));
                 $interfaceName = $item->textContent;
 
                 $interface = new InterfaceSymfony();

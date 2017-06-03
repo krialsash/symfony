@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
  */
 class DefaultController extends Controller
 {
-    /**
+     /**
      * @Route("/article", name="article_index")
      */
     public function indexAction()
@@ -62,7 +62,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/show/{id}", name="article_show")
+     * @Route("/article/show/{id}", name="article_show")
      *
      * @param $id
      */
@@ -79,7 +79,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/edit/{id}", name="article_edit")
+     * @Route("article/edit/{id}", name="article_edit")
      *
      * @param $id
      *
@@ -117,7 +117,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/delete/{id}", name="article_delete")
+     * @Route("/article/delete/{id}", name="article_delete")
      *
      * @param $id
      *
