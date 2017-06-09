@@ -4,20 +4,31 @@ security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory:
-                users:
-                    sash:
-                      password: $2y$12$Jw9SWl3Y2Sk6UGsTDCprtOfZft5BXHaYyw4w4.fFcR.jSb.ThIWiG
-                      roles: 'ROLE_ADMIN'
+        our_db_provider:
+            entity:
+                class: AppBundle:User
+                property: username
+                # if you're using multiple entity managers
+                # manager_name: customer
+
+#        in_memory:
+ #           memory:
+  #              users:
+   #                 sash:
+    #                  password: $2y$12$Jw9SWl3Y2Sk6UGsTDCprtOfZft5BXHaYyw4w4.fFcR.jSb.ThIWiG
+     #                 roles: 'ROLE_ADMIN'
                    # krial:
                     #  password: $2y$12$Jw9SWl3Y2Sk6UGsTDCprtOfZft5BXHaYyw4w4.fFcR.jSb.ThIWiG
                      # roles: 'ROLE_USER'
 
     encoders:
-        Symfony\Component\Security\Core\User\User:
+        AppBundle\Entity\User:
             algorithm: bcrypt
-            cost: 12
+
+#    encoders:
+ #       Symfony\Component\Security\Core\User\User:
+  #          algorithm: bcrypt
+   #         cost: 12
             # bin/console security:encode-password
 
     firewalls:
@@ -26,9 +37,15 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        #secured_area:
+        #            logout:
+        #                path:   /logout
+        #                target: /
+
         main:
             anonymous: ~
             http_basic: ~
+            provider: our_db_provider   # for db
             # activate different ways to authenticate
 
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate

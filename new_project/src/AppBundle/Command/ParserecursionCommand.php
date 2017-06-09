@@ -29,7 +29,7 @@ class ParserecursionCommand extends ContainerAwareCommand
         $this->getNamespaceRecursion('http://api.Symfony.com/3.2/Symfony.html', null);
     }
 
-    public function getNamespaceRecursion(string $url, ?NamespaceRecursion $parent=null)
+    public function getNamespaceRecursion(string $url, ?NamespaceRecursion $parent)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
 
